@@ -4,6 +4,7 @@ ENV PATH "$PATH:/root/.local/bin"
 
 # Add awscli
 RUN apk add --update \
+    docker \
     python \
     python-dev \
     py-pip \
