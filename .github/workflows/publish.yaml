@@ -1,28 +1,61 @@
 
----
+# ---
+# on:
+#   push:
+#     branches:
+#       - master
+
+# jobs:
+#   pushImage:
+#     name: Build and push Docker image
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@master
+
+#       - name: Build image
+#         run: docker build -t base .
+
+#       - name: Login to Docker Hub
+#         run: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+#         env:
+#           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+#           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+
+#       - name: Tag Docker image
+#         run: docker tag base framer/helmfile
+
+#       - name: Push image to Docker Hub
+#         run: docker push framer/helmfile
+
+name: publish-docker-image
+
 on:
   push:
-    branches:
-      - master
+    branches: gcr
 
 jobs:
-  pushImage:
-    name: Build and push Docker image
+  multi-registries:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-
-      - name: Build image
-        run: docker build -t base .
-
-      - name: Login to Docker Hub
-        run: docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-
-      - name: Tag Docker image
-        run: docker tag base framer/helmfile
-
-      - name: Push image to Docker Hub
-        run: docker push framer/helmfile
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1 
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/test:latest
