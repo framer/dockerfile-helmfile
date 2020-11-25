@@ -2,7 +2,7 @@ name: Build & Push Image
 
 on:
   push:
-    branches: gcr
+    branches: master
 
 jobs:
   helmfile-docker:
