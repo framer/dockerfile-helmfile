@@ -10,7 +10,7 @@ workflows:
           image: ghcr.io/framer/helmfile:latest
           update-description: true
           docker-password: CR_PAT_PUBLISHER
-          docker-username: motifus
+          docker-username: GHCR_USER
           registry: ghcr.io
           context: "GitHub Container Registry"
           filters:
