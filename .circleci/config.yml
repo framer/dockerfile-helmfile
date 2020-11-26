@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: |
+          TAG=ghcr.io/framer/helmfile:latest
+          docker build -t $TAG .
+          echo $CR_PAT_PUBLISHER | docker login ghcr.io -u motifus --password-stdin
+          docker push $TAG
+
+workflows:
+  version: 2
+  validate:
+    jobs:
+      - build:
+          context: "GitHub Container Registry"
