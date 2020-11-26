@@ -4,10 +4,11 @@ orbs:
   docker: circleci/docker@1.5.0
 
 workflows:
-  build-docker-image-only:
+  publish-image:
     jobs:
       - docker/publish:
-          image: ghcr.io/framer/helmfile:latest
+          image: framer/helmfile
+          tag: latest
           update-description: true
           docker-password: CR_PAT_PUBLISHER
           docker-username: GHCR_USER
