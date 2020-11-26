@@ -1,4 +1,5 @@
 FROM quay.io/roboll/helmfile:helm3-v0.118.5
+LABEL org.opencontainers.image.source https://github.com/framer/dockerfile-helmfile
 
 ENV PATH "$PATH:/root/.local/bin"
 
