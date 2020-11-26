@@ -9,7 +9,7 @@ workflows:
       - docker/publish:
           image: ghcr.io/framer/helmfile:latest
           update-description: true
-          docker-password: $CR_PAT_PUBLISHER
+          docker-password: CR_PAT_PUBLISHER
           docker-username: motifus
           registry: ghcr.io
           context: "GitHub Container Registry"
