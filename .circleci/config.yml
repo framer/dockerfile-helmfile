@@ -18,3 +18,7 @@ workflows:
     jobs:
       - build:
           context: "GitHub Container Registry"
+          filters:
+            branches:
+              only:
+                - circleci
