@@ -8,7 +8,7 @@ workflows:
     jobs:
       - docker/publish:
           image: framer/helmfile
-          tag: latest
+          tag: latest,$CIRCLE_SHA1
           docker-password: GHCR_PAT_PUBLISHER
           docker-username: GHCR_USER
           registry: ghcr.io
