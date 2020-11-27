@@ -9,7 +9,7 @@ workflows:
       - docker/publish:
           image: framer/helmfile
           tag: latest
-          docker-password: CR_PAT_PUBLISHER
+          docker-password: GHCR_PAT_PUBLISHER
           docker-username: GHCR_USER
           registry: ghcr.io
           remote-docker-dlc: true
